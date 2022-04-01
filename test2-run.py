@@ -1,4 +1,4 @@
-#mount -t tmpfs -o size=50M tmpfs /mnt/tmp
+#This version is not saving the image to disk but using a memory buffer
 
 from PIL import Image
 import pygame
@@ -35,7 +35,7 @@ LABELS = open(labelsPath).read().strip().split("\n")
 np.random.seed(round(time.time()))
 COLORS = np.random.randint(10, 255, size=(len(LABELS), 3), dtype="uint8")
 
-#"""
+"""
 #initialize display window PYGAME
 pygame.init()
 displayWidth = 1920
@@ -45,7 +45,7 @@ pygame.display.set_caption('Pygame image')
 surface.fill((100,100,100))
 pygame.display.update()
 #--pygame
-#"""
+"""
 
 #darknet_path = '/home/tomasz/darknet/'
 
@@ -57,7 +57,7 @@ ln=[ln[i - 1] for i in net.getUnconnectedOutLayers()]
 counter = 0
 while 1:
     counter = counter + 1
-    download_file("Admin", "1234", "http://192.168.0.250/cgi-bin/jpg/image.cgi", "/mnt/tmp/image.jpg")
+    #download_file("Admin", "1234", "http://192.168.0.250/cgi-bin/jpg/image.cgi", "/mnt/tmp/image.jpg")
     
     #read to variable
     buffer = tempfile.SpooledTemporaryFile(150000)
@@ -65,6 +65,7 @@ while 1:
         for chunk in response.iter_content(chunk_size = 8192):
             buffer.write(chunk)
     buffer.seek(0)
+    """
     im = Image.open(io.BytesIO(buffer.read()))
     buffer.close()
     mode = im.mode
@@ -73,9 +74,12 @@ while 1:
     py_image = pygame.image.fromstring(data, size, mode)
     surface.blit(py_image, (0, 0))
     pygame.display.update()
+    """
 
-    image = cv2.imread('/mnt/tmp/image.jpg')
-    points = (480, 270)
+    bytes_as_np_array = np.frombuffer(buffer.read(), dtype=np.uint8)
+    image = cv2.imdecode(bytes_as_np_array, cv2.IMREAD_ANYCOLOR)
+    buffer.close()
+    #points = (480, 270)
     #image = cv2.resize(image, points, interpolation= cv2.INTER_LINEAR)
     (H, W) = image.shape[:2]
     blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416), swapRB=True, crop=False)
