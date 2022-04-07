@@ -1,6 +1,8 @@
-# Yolo-with-IP-camera
+# YoloV4 on Jetson Nano 2GB or 4GB
 
-How to run on Jetson Nano
+First free some memory - use Xfce desktop manager, uninstall teamviewer. You should have 0.6-0.7GB memory consumed running the jtop only.
+
+Install and run YoloV4
 
 1. sudo apt update
 2. sudo apt install python3-pip
