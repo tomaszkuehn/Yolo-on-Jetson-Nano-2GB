@@ -11,4 +11,4 @@ How to run on Jetson Nano
 7. pip3 install numpy==1.19.4
 8. clone yolov4 from https://github.com/AlexeyAB/darknet (should create darknet folder) and make
 9. clone script from this repo and copy into darknet folder
-10. change to darknet folder and run "python3 script.py"
+10. change to darknet folder and run the script
