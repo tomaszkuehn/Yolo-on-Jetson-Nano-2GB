@@ -1,6 +1,7 @@
 # YoloV4 on Jetson Nano 2GB or 4GB
 
 First free some memory - use Xfce desktop manager, uninstall teamviewer. You should have 0.6-0.7GB memory consumed running the jtop only.
+And you need to increase swap file to 3GB. The easiest way using jtop (preinstalled).
 
 Install and run YoloV4
 
